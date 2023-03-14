@@ -93,7 +93,7 @@ Esta línea permite agrupar los datos de las muestras para poner juntas las dife
 | genus | 131079 | Limnobacter| 0 | 0 | 0 | 90 |
 | species | 2060312 | Altererythrobacter sp. B11 | 0 | 0 | 2 | 10 |
 
-Al momento de hacer el filtrado de los datos no se van a reportar los resultados como muestras individuales "SP1, SP2, SP3, SP4", sino serán unidos todos los datos y serán reportados como las réplicas de SP. Es recomendable indicar códigos específicos para cada muestra y en caso de tener réplicas, poner los números. Es decir, en vez de poner: "Muestra1.1, Muestra1.2, Muestra2.1, Muestra2.2" , es mejor usar un código del estilo "A1, A2, B1, B2", así se agrupan las diferentes muestras con sus réplicas. En caso de no tener réplicas no es necesario hacer lo mencionado con anterioridad y dejar la línea comentada por default. Más ejemplos de cómo pueden ser los resultados pueden ser observados en [**Generación de Boxplots**](##Generación-de-Boxplots)
+Al momento de hacer el filtrado de los datos no se van a reportar los resultados como muestras individuales "SP1, SP2, SP3, SP4", sino serán unidos todos los datos y serán reportados como las réplicas de SP. Es recomendable indicar códigos específicos para cada muestra y en caso de tener réplicas, poner los números. Es decir, en vez de poner: "Muestra1.1, Muestra1.2, Muestra2.1, Muestra2.2" , es mejor usar un código del estilo "A1, A2, B1, B2", así se agrupan las diferentes muestras con sus réplicas. En caso de no tener réplicas no es necesario hacer lo mencionado con anterioridad y dejar la línea comentada por default. Más ejemplos de cómo pueden ser los resultados pueden ser observados en [**Generación de gráficos**](##Generación-de-gráficos)
 
 
 Dentro de este mismo loop se filtran los datos para poder obtener un **Top n** de los datos, es decir, obtener un Top n de especies, generos, familias y filos. Se puede modificar el tamaño del top dependiendo de las necesidades del estudio. El default de este programa es un Top 10. 
@@ -101,6 +101,20 @@ Dentro de este mismo loop se filtran los datos para poder obtener un **Top n** d
 # Visualización de datos 
 
 En esta sección se generan diferentes outputs en forma de documentos **.csv**, barplots y boxplots que ayudan a la visualización de los datos, así como son útiles para hacer análisis estadísticos posteriores debido a que ya pasaron por un normalizado y filtrado. 
+
 ## Generación de tablas 
-## Generación de Boxplots 
+En la línea:
+```Rscript
+name = paste("MetaGen",taxa[i])
+```
+se define el nombre para identificar el análisis junto con el nivel taxónomico. En esta línea se puede modificar "MetaGen" con el nombre que se desee. Se realizan tablas por **nivel taxónomico** donde se indica para cada muestra los valores de conteo, las abundancias para todos los datos, y las abundancias para el **Top n** de datos.
+
+La función `genDiversityIndexTable` se encarga de enviar la tabla de datos **raw_data**, la cual cuenta con todos los conteos y su nivel taxónomico, y realiza una nueva agrupación para calcular el índice de Shannon y Simpson para cada una de las muestras de acuerdo a sus niveles taxonómicos.
+El data frame creado (diversity) está separado por estos niveles taxónomicos y desplega el Shannon y Simpson de cada muestra. Posteriormente estas tablas son guardados en distintos documentos  **.csv**.
+
+
+## Generación de gráficos
+
+Se generan gráficos de tipo boxplot que puedan mostrar la varianza de índices de Shannon y Simpson que mostraron las réplicas de una misma muestra. Estos gráficos también están clasificados por el nivel taxónomico, por lo que se obtienen la cantidad de gráficos obtenidos es el doble de niveles taxónomicos que se están manejando, pues las gráficas para Shannon y Simpson son separadas. Las gráficas distinguen que valor se está calculando, muestran el nombre de la muestra y cada muestra cuenta con un color aleatorio en sus resultados.
+
 
